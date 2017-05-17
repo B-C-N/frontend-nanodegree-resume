@@ -6,19 +6,19 @@ This is empty on purpose! Your code to build the resume will go here.
 /*
 Bio details
  */
-var bio = {
+ var bio = {
     "name": "Richard Tamunotonye",
     "role": "Web Developer",
-    "contacts" : {
-    "mobile" : "+234 8105 393 816",
-    "email": "hellotams@gmail.com",
-    "gitHub": "richardtamunotonye",
-    "twitter": "@IsmeeRich",
-    "location": "3 Bernard Carr St, Port Harcourt Town, Port Harcourt, Nigeria"
+    "contacts": {
+        "mobile": "+234 8105 393 816",
+        "email": "richardtamunotonye@gmail.com",
+        "github": "richardtamunotonye",
+        "twitter": "@IsmeeRich",
+        "location": "2/3 Bernard Carr St, Port Harcourt Town, Port Harcourt, Nigeria"
     },
     "welcomeMessage": "Hello! welcome to my interactive resume page",
-    "skills": ["[ JS, HTML, CSS, UX/UI Design, Karate and Piblic Speaking ]"],
-    "bioPic": "images/dope.png",
+    "skills": [" Java Script","HTML", "CSS", "UX/UI Design", "Karate and Public Speaking "],
+    "biopic": "images/dope.png",
 /*
 Bio display function
  */
@@ -30,15 +30,20 @@ Bio display function
     var bioRole = HTMLheaderRole.replace("%data%", bio.role);
     $("#header").prepend(bioRole);
 
-    var bioPic = HTMLbioPic.replace("%data%", bio.bioPic);
+    var bioPic = HTMLbioPic.replace("%data%", bio.biopic);
     $("#header").append(bioPic);
 
     var bioMessage = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
     $("#header").append(bioMessage);
 
-    $("#header").append(HTMLskillsStart);
-    var bioSkills = HTMLskills.replace("%data%", bio.skills);
-    $("#skills").append(bioSkills);
+    if (bio.skills.length) {
+        var len = bio.skills.length;
+        // Append all the skills, and the skills title
+        $('#header').append(HTMLskillsStart);
+        for (var skill = 0; skill < len; skill++) {
+            $('#skills').append(HTMLskills.replace('%data%', bio.skills[skill] ));
+        }
+    }
 
     var formattedmobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
     $('#topContacts').append(formattedmobile);
@@ -60,7 +65,6 @@ Bio display function
   }
 };
 
-bio.display();
 
 /*
 Work details
@@ -73,12 +77,13 @@ var work = {
             "title": "Graphic/ UX/UI Designer",
             "location": "Rivers State Central Library, 2/3 Bernard Carr Streen, Port Harcourt, Nigeria",
             "dates": "2011 - 2013",
-            "description": "I was the Team Lead for UX/UI Designs, i conducted user experience research for clients and also did several corporate branding projects."
+            "description": "I was the Team Lead for UX/UI Designs, i conducted user experience"+
+                            " research for clients and also did several corporate branding projects."
         },
         {
             "employer": "Sync-Tech Link",
             "title": "Web Developer",
-            "location": "Marine Base, PMB 5028, Port Harcourt.",
+            "location": "#75 Ekerekan Ama, Opposite Okrika Local Goverment Council",
             "dates": "2015 - 2017",
             "description": " I designed several one-page Front-End "
         },
@@ -91,48 +96,44 @@ Work display function
 
     'display': function() {
 
-    for (job in work.jobs) {
+  for (var i = 0, len = work.jobs.length; i < len; i++) {
 
     $('#workExperience').append(HTMLworkStart);
 
-        var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
-        var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+        var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[i].employer);
+        var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[i].title);
         var formattedEmployerTitle = formattedEmployer + formattedTitle;
         $(".work-entry:last").append(formattedEmployerTitle);
 
-        var formattedDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
+        var formattedDates = HTMLworkDates.replace("%data%", work.jobs[i].dates);
         $(".work-entry:last").append(formattedDates);
 
-        var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description);
+        var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[i].description);
         $(".work-entry:last").append(formattedDescription);
 
-        var formattedLocation = HTMLworkLocation.replace("%data%", work.jobs[job].location);
+        var formattedLocation = HTMLworkLocation.replace("%data%", work.jobs[i].location);
         $(".work-entry:last").append(formattedLocation);
 
     }
     }
 };
-
-work.display();
-
 /*
 Project Details
  */
-
 var projects = {
     "projects": [
         {
             "title": "Andela Android Learning Community",
             "dates": "2017 ",
             "description": " I was a fascilitator in the Andeala Learning Community in Port Harcourt",
-            "images": "images/andela.jpg",
+            "images": ["images/andela.jpg"],
             "url": "https://andela.com/"
         },
         {
             "title": "Build a Portfolio Site",
             "dates": "2017",
             "description": "In this project i designed a responsive portfolio site inline with mockup provided by Udacity ",
-            "images": "images/img001.png",
+            "images":["images/img001.png"],
             "url": "https://github.com/richardtamunotonye/Udacity_Frontend-Nanodegree-Project-Build-a-Portfolio-Site"
         }
     ],
@@ -140,30 +141,26 @@ var projects = {
     /*
 Project display function
  */
-
     'display': function() {
-    for (project in projects.projects) {
+            for (var i = 0, iLen = projects.projects.length; i < iLen; i++) {
 
     $('#projects').append(HTMLprojectStart);
 
-    var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title).replace("#", projects.projects[project].url);
+    var formattedTitle = HTMLprojectTitle.replace("%data%", projects.projects[i].title).replace("#", projects.projects[i].url);
     $(".project-entry:last").append(formattedTitle);
 
-    var formattedDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates);
+    var formattedDates = HTMLprojectDates.replace("%data%", projects.projects[i].dates);
     $(".project-entry:last").append(formattedDates);
 
-    var formattedDescription = HTMLprojectDescription.replace("%data%", projects.projects[project].description);
+    var formattedDescription = HTMLprojectDescription.replace("%data%", projects.projects[i].description);
     $(".project-entry:last").append(formattedDescription);
-
-    var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[project].images);
+    for (var j = 0, jLen = projects.projects[i].images.length; j < jLen; j++){
+    var formattedImage = HTMLprojectImage.replace("%data%", projects.projects[i].images);
     $(".project-entry:last").append(formattedImage);
-
     }
-    }
+}
+   }
 };
-
-projects.display();
-
     /*
 Education Details
  */
@@ -173,8 +170,8 @@ var education = {
             "name": "University of Port Harcourt",
             "location": "University of Port Harcourt, East/West Road, PMB 5323 Choba, Rivers State, Nigeria",
             "degree": "B.Sc",
-            "majors": "Computer Science",
-            "dates": 2017,
+            "majors": ['Computer Science'],
+            "dates": "2017",
             "url": "http://www.uniport.edu.ng/"
         },
     ],
@@ -183,13 +180,13 @@ var education = {
         {
             "title": "Android for Beginers",
             "school": "Udacity",
-            "dates": 2015,
+            "dates": "2015",
             "url": "https://www.udacity.com/course/android-development-for-beginners--ud837"
         },
         {
             "title": "Front-End Developer Nanodegree",
             "school": " Udacity",
-            "dates": 2017 ,
+            "dates": "2017",
             "url": "https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001"
         }
     ],
@@ -201,49 +198,48 @@ Display education function
 
     $("#education").append(HTMLschoolHeader);
 
-    for (school in education.schools) {
+
+    for (var i = 0, iLen = education.schools.length; i < iLen; i++) {
 
     $("#education").append(HTMLschoolStart);
 
-
-        var formattedschoolName = HTMLschoolName.replace("%data%", education.schools[school].name).replace("#", education.schools[school].url);
+        var formattedschoolName = HTMLschoolName.replace("%data%", education.schools[i].name).replace("#", education.schools[i].url);
         $(".education-entry:last").append(formattedschoolName);
 
-        var formattedschoolDates = HTMLschoolDates.replace("%data%", education.schools[school].dates);
+        var formattedschoolDates = HTMLschoolDates.replace("%data%", education.schools[i].dates);
         $(".education-entry:last").append(formattedschoolDates);
 
-        var formattedschoolDegree = HTMLschoolDegree.replace("%data%", education.schools[school].degree);
+        var formattedschoolDegree = HTMLschoolDegree.replace("%data%", education.schools[i].degree);
         $(".education-entry:last").append(formattedschoolDegree);
 
-        var formattedschoolMajor = HTMLschoolMajor.replace("%data%", education.schools[school].majors);
+        for (var j = 0, jLen = education.schools[i].majors.length; j < jLen; j++) {
+        var formattedschoolMajor = HTMLschoolMajor.replace("%data%", education.schools[i].majors[j]);
         $(".education-entry:last").append(formattedschoolMajor);
+    }
 
-        var formattedschoolLocation = HTMLschoolLocation.replace("%data%", education.schools[school].location);
+        var formattedschoolLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);
         $(".education-entry:last").append(formattedschoolLocation);
 
-        var formattedschoolURL = HTMLschoolURL.replace("%data%", education.schools[school].url).replace("#", education.schools[school].url);
+        var formattedschoolURL = HTMLschoolURL.replace("%data%", education.schools[i].url).replace("#", education.schools[i].url);
         $(".education-entry:last").append(formattedschoolURL);
 
     }
 
+
    $("#education").append(HTMLonlineClasses);
-
-   for (course in education.onlineCourses) {
-
-    $("#education").append(HTMLschoolStart);
-
-
-        var formattedonlineSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[course].school);
+for (var k = 0, len = education.onlineCourses.length; k < len; k++) {
+        var formattedonlineSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[k].school);
         $(".education-entry:last").append(formattedonlineSchool);
 
-        var formattedonlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[course].title).replace("#", education.onlineCourses[course].url);
+        var formattedonlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[k].title).replace("#", education.onlineCourses[k].url);
         $(".education-entry:last").append(formattedonlineTitle);
 
-        var formattedonlineDate = HTMLonlineDates.replace("%data%", education.onlineCourses[course].dates);
+        var formattedonlineDate = HTMLonlineDates.replace("%data%", education.onlineCourses[k].dates);
         $(".education-entry:last").append(formattedonlineDate);
 
-        var formattedonlineschoolURL = HTMLonlineURL.replace("%data%", education.onlineCourses[course].url).replace("#", education.onlineCourses[course].url);
+        var formattedonlineschoolURL = HTMLonlineURL.replace("%data%", education.onlineCourses[k].url).replace("#", education.onlineCourses[k].url);
         $(".education-entry:last").append(formattedonlineschoolURL);
+        $("#education").append(HTMLschoolStart);
 
     }
 
@@ -251,18 +247,11 @@ Display education function
 
 };
 
+bio.display();
+work.display();
+projects.display();
+
 education.display();
 
 
-var charEscape = function(_html) {
-    var newHTML = _html;
-    newHTML = _html.replace(/<|>|script/gi,"");
-    return newHTML;
-};
-
-
-/**
-Google Map*/
-
-var googleMap = '<div id="map"></div>';
-$("#mapDiv").append(googleMap);
+$('#mapDiv').append(googleMap);
